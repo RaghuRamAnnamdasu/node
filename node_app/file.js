@@ -1,6 +1,10 @@
 const quote2 = "Live more, worry less 😀😂"
 
-// const fs = require("fs");
+const fs = require("fs");
+
+// fs.writeFile(`./backupp/prav.html`, quote2,(err)=>{
+//         console.log("Completed Writing...!!")
+//       })
 
 // const[,,count]=process.argv;
 
@@ -18,13 +22,13 @@ const quote2 = "Live more, worry less 😀😂"
 //     }
 // })
 
-// fs.appendFile("./backup/cool.txt","\n"+quote2,(err)=>{
-//     if(err){
-//         console.log(err);
-//     }else{
-//         console.log("completed appending");
-//     }
-// })
+fs.writeFile("./backup/cool.txt","\n"+quote2,(err)=>{
+    if(err){
+        console.log(err);
+    }else{
+        console.log("completed appending");
+    }
+})
 
 
 
