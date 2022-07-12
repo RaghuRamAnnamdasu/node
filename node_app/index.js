@@ -5,7 +5,12 @@ import {request, response} from "express";
 import express from "express";
 import {MongoClient} from "mongodb";
 import dotenv from "dotenv";
+import {moviesRouter} from "./routes/movies.js"
+import cors from "cors";
+
 const app = express();
+
+app.use(cors());
 
 dotenv.config();
 
@@ -28,47 +33,8 @@ async function createConnection(){
   return client;
 }
 
-const client = await createConnection();
+export const client = await createConnection();
 
-  // app.get('/movies', async function (req, res) {
-  //   const movies = await client.db("node_app").collection("movies").find().toArray();
-  //   res.send(movies);
-  // });
-
-  app.get('/movies', async function (req, res) {
-
-    if(req.query.rating){
-      req.query.rating = +req.query.rating;
-    }
-    const movies = await client.db("node_app").collection("movies").find(req.query).toArray();
-    res.send(movies);
-  });
-
-  app.get("/movies/:id", async function(req,res){
-    const {id} = req.params;
-    // const movie = data.find((mv)=>mv.id==id);
-    const movie = await client.db("node_app").collection("movies").findOne({id : id});
-    movie ? res.send(movie) : res.status(404).send({msg : "Movie not found"});
-  });
-
-  app.post('/movies', async function (req, res) {
-    const data = req.body;
-    const result = await client.db("node_app").collection("movies").insertMany(data);
-    res.send(result);
-  })
-
-  app.delete("/movies/:id", async function(req,res){
-    const {id} = req.params;
-    // const movie = data.find((mv)=>mv.id==id);
-    const result = await client.db("node_app").collection("movies").deleteOne({id : id});
-    result.deletedCount ? res.send(result) : res.status(404).send({msg : "Movie not found"});
-  });
-
-  app.put('/movies/:id', async function (req, res) {
-    const {id} = req.params;
-    const data = req.body;
-    const result = await client.db("node_app").collection("movies").updateOne({id : id},{$set : data});
-    res.send(result);
-  })
+app.use("/movies",moviesRouter);
 
 app.listen(port,()=>console.log(`App is started in ${port}`));
