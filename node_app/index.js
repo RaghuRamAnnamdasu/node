@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 })
 
 
-const port = 4000;
+const port = process.env.PORT;
 
 app.use(express.json());
 
