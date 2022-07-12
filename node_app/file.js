@@ -1,6 +1,6 @@
 const quote2 = "Live more, worry less 😀😂"
 
-const fs = require("fs");
+// const fs = require("fs");
 
 // fs.writeFile(`./backupp/prav.html`, quote2,(err)=>{
 //         console.log("Completed Writing...!!")
@@ -22,18 +22,19 @@ const fs = require("fs");
 //     }
 // })
 
-fs.writeFile("./backup/cool.txt","\n"+quote2,(err)=>{
-    if(err){
-        console.log(err);
-    }else{
-        console.log("completed appending");
-    }
-})
+// fs.writeFile("./backup/cool.txt","\n"+quote2,(err)=>{
+//     if(err){
+//         console.log(err);
+//     }else{
+//         console.log("completed appending");
+//     }
+// })
 
 
 
 // const os = require("os");
-// console.log("Free Memory", os.freemem()/1024/1024/1024);
-// console.log("Total Memory", os.totalmem()/1024/1024/1024);
+import os from "os";
+console.log("Free Memory", os.freemem()/1024/1024/1024);
+console.log("Total Memory", os.totalmem()/1024/1024/1024);
 // console.log("Version", os.version());
 // console.log("Processors", os.cpus());

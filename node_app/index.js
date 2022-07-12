@@ -30,8 +30,17 @@ async function createConnection(){
 
 const client = await createConnection();
 
+  // app.get('/movies', async function (req, res) {
+  //   const movies = await client.db("node_app").collection("movies").find().toArray();
+  //   res.send(movies);
+  // });
+
   app.get('/movies', async function (req, res) {
-    const movies = await client.db("node_app").collection("movies").find().toArray();
+
+    if(req.query.rating){
+      req.query.rating = +req.query.rating;
+    }
+    const movies = await client.db("node_app").collection("movies").find(req.query).toArray();
     res.send(movies);
   });
 
@@ -48,5 +57,18 @@ const client = await createConnection();
     res.send(result);
   })
 
+  app.delete("/movies/:id", async function(req,res){
+    const {id} = req.params;
+    // const movie = data.find((mv)=>mv.id==id);
+    const result = await client.db("node_app").collection("movies").deleteOne({id : id});
+    result.deletedCount ? res.send(result) : res.status(404).send({msg : "Movie not found"});
+  });
+
+  app.put('/movies/:id', async function (req, res) {
+    const {id} = req.params;
+    const data = req.body;
+    const result = await client.db("node_app").collection("movies").updateOne({id : id},{$set : data});
+    res.send(result);
+  })
 
 app.listen(port,()=>console.log(`App is started in ${port}`));
